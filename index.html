@@ -8,322 +8,965 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- HEADER -->
-    <header class="header">
-        <nav class="nav container">
-            <div class="logo">NORX COMPANY</div>
-            <ul class="nav-links">
-                <li><a href="#airdrop">Airdrop</a></li>
-                <li><a href="#services">Serviços</a></li>
-                <li><a href="#token">Token</a></li>
-                <li><a href="#como-comprar">Como Comprar</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-            <a href="https://t.me/norxcompanyoficial" target="_blank" class="cta-button">
-                Participar Agora
-            </a>
-        </nav>
-    </header>
-
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <div class="hero-badge">🚀 Lançamento Oficial</div>
-                <h1 class="hero-title">NORXCOIN</h1>
-                <p class="hero-subtitle">O Token que Revoluciona o Mercado FOREX</p>
-                
-                <div class="countdown-container">
-                    <div class="countdown-title">⏰ Lançamento em:</div>
-                    <div class="countdown" id="countdown">
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="days">00</span>
-                            <span class="countdown-label">Dias</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="hours">00</span>
-                            <span class="countdown-label">Horas</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="minutes">00</span>
-                            <span class="countdown-label">Min</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="countdown-number" id="seconds">00</span>
-                            <span class="countdown-label">Seg</span>
-                        </div>
-                    </div>
-                    <div class="launch-info">
-                        📅 10 de Junho de 2025 | 💰 Preço: $0.0004 | 🌐 PancakeSwap BSC
-                    </div>
-                </div>
-            </div>
+    <!-- TELA DE ENTRADA -->
+    <div class="entry-screen" id="entryScreen">
+        <div class="entry-content">
+            <div class="company-logo-entry">NORX</div>
+            <div class="company-tagline">COMPANY</div>
+            <div class="entry-subtitle">Forex • Investments • Technology</div>
+            <button class="enter-button" id="enterButton">
+                <span class="button-text">ENTRAR</span>
+                <span class="button-icon">📈</span>
+            </button>
         </div>
-    </section>
+        
+        <!-- Partículas de fundo -->
+        <div class="particles-bg" id="particlesBg"></div>
+    </div>
 
-    <!-- AIRDROP SECTION -->
-    <section id="airdrop" class="airdrop-section">
-        <div class="container">
-            <div class="airdrop-content fade-in">
-                <h2 class="airdrop-title">🎁 AIRDROP ESPECIAL</h2>
-                
-                <div class="airdrop-offer">
-                    <div class="offer-highlight">
-                        Invista $5 → Ganhe 100.000 NORX!
-                    </div>
-                    <p style="font-size: 18px; margin-bottom: 30px;">
-                        Adquira acesso à nossa <strong>Sala VIP de Sinais FOREX</strong> por apenas $5
-                        e receba <strong>100.000 tokens NORXCOIN</strong> completamente GRÁTIS!
-                    </p>
+    <!-- ANIMAÇÃO DAS VELAS -->
+    <div class="candles-animation" id="candlesAnimation">
+        <div class="candle red-candle" id="redCandle">
+            <div class="candle-body"></div>
+            <div class="candle-wick"></div>
+        </div>
+        <div class="candle green-candle" id="greenCandle">
+            <div class="candle-body"></div>
+            <div class="candle-wick"></div>
+        </div>
+        <div class="candle explosion-candle" id="explosionCandle">
+            <div class="candle-body"></div>
+            <div class="candle-wick"></div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content" id="mainContent">
+        <!-- HEADER -->
+        <header class="header">
+            <nav class="nav container">
+                <div class="logo">NORX COMPANY</div>
+                <ul class="nav-links">
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#airdrop">Airdrop</a></li>
+                    <li><a href="#token">Token</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#equipe">Equipe</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+                <a href="https://t.me/norxcompanyoficial" target="_blank" class="cta-button">
+                    Participar Agora
+                </a>
+            </nav>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content fade-in">
+                    <div class="hero-badge">🏆 Empresa Líder em FOREX</div>
+                    <h1 class="hero-title">NORX COMPANY</h1>
+                    <p class="hero-subtitle">Forex • Investments • Technology</p>
                     
-                    <div class="value-grid">
-                        <div class="value-item">
-                            <div class="value-label">💰 Investimento</div>
-                            <div class="value-amount">$5.00</div>
+                    <div class="company-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">93%</div>
+                            <div class="stat-label">Taxa de Assertividade</div>
                         </div>
-                        <div class="value-item">
-                            <div class="value-label">🎯 Sala VIP</div>
-                            <div class="value-amount">$16.00</div>
+                        <div class="stat-item">
+                            <div class="stat-number">57</div>
+                            <div class="stat-label">Trades Realizados</div>
                         </div>
-                        <div class="value-item">
-                            <div class="value-label">🎁 100K Tokens</div>
-                            <div class="value-amount">$40.00</div>
+                        <div class="stat-item">
+                            <div class="stat-number">19</div>
+                            <div class="stat-label">Clientes Recorrentes</div>
                         </div>
-                        <div class="value-item">
-                            <div class="value-label">🔥 Lucro Total</div>
-                            <div class="value-amount">$51.00</div>
+                        <div class="stat-item">
+                            <div class="stat-number">13.89%</div>
+                            <div class="stat-label">Retorno Mensal</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2 class="section-title fade-in">🎯 Nossos Serviços</h2>
+                <p style="text-align: center; font-size: 18px; color: #ccc; margin-bottom: 50px;" class="fade-in">
+                    Performance comprovada com <strong style="color: #D4AF37;">resultados reais</strong> | Use NORX e economize até 37%
+                </p>
+                
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">📈</div>
+                        <h3 class="service-name">Sala de Sinais FOREX</h3>
+                        <p class="service-description">
+                            <strong style="color: #4CAF50;">93.0% de assertividade comprovada!</strong><br>
+                            📊 57 trades realizados | ✅ 53 vitórias | ❌ 4 derrotas<br>
+                            👥 19 clientes mensais pagantes recorrentes
+                        </p>
+                        <div class="price-info">
+                            <div class="old-price">Normal: $16/mês</div>
+                            <div class="new-price">Com NORX: $10/mês</div>
+                            <div class="savings">💰 Economia de 37.5%</div>
                         </div>
                     </div>
                     
-                    <div style="background: rgba(255, 68, 68, 0.2); padding: 20px; border-radius: 15px; margin-top: 30px;">
-                        <strong style="color: #FFD700; font-size: 18px;">
-                            ⚠️ DEADLINE: 5 de Junho de 2025
-                        </strong><br>
-                        Após esta data, não haverá mais tokens de bônus!
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🤖</div>
+                        <h3 class="service-name">Robô Sala de Sinais</h3>
+                        <p class="service-description">
+                            Sistema automatizado para sinais FOREX.
+                            Opera 24/7 seguindo estratégias testadas e aprovadas.
+                        </p>
+                        <div class="price-info">
+                            <div class="old-price">Normal: $45/mês</div>
+                            <div class="new-price">Com NORX: $36/mês</div>
+                            <div class="savings">💰 Economia de 20%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">📰</div>
+                        <h3 class="service-name">Robô de Notícias</h3>
+                        <p class="service-description">
+                            Análise automatizada de notícias para trading.
+                            Identifica oportunidades baseadas em eventos do mercado.
+                        </p>
+                        <div class="price-info">
+                            <div class="old-price">Normal: $89/mês</div>
+                            <div class="new-price">Com NORX: $80/mês</div>
+                            <div class="savings">💰 Economia de 10%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">🏦</div>
+                        <h3 class="service-name">Mesa Proprietária</h3>
+                        <p class="service-description">
+                            Capital de $50.000 para trading profissional. 
+                            Profit share de 80% para o trader, 20% para a empresa.
+                        </p>
+                        <div class="price-info">
+                            <div class="old-price">Normal: $430/mês</div>
+                            <div class="new-price">Com NORX: $390/mês</div>
+                            <div class="savings">💰 Economia de 9.3%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">📊</div>
+                        <h3 class="service-name">Copytrade</h3>
+                        <p class="service-description">
+                            Copie automaticamente as operações dos nossos traders profissionais.
+                            Estratégia de baixo risco com alta performance.
+                        </p>
+                        <div class="price-info">
+                            <div class="old-price">Normal: $40/mês</div>
+                            <div class="new-price">Com NORX: $37/mês</div>
+                            <div class="savings">💰 Economia de 7.5%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card fade-in">
+                        <div class="service-icon">💼</div>
+                        <h3 class="service-name">Norx Group Investments</h3>
+                        <p class="service-description">
+                            <strong style="color: #4CAF50;">13,89% de rentabilidade no último mês!</strong><br>
+                            Fundo exclusivo com distribuição mensal de lucros + recompensas em NORX.
+                        </p>
+                        <div class="price-info">
+                            <div style="color: #D4AF37; font-weight: 700;">Investimentos + Recompensas:</div>
+                            <div class="new-price">R$ 5K → 1.000 NORX</div>
+                            <div class="new-price">R$ 50K → 1M NORX</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SERVICES SECTION -->
-    <section id="services" class="services-section">
-        <div class="container">
-            <h2 class="section-title fade-in">🎯 Nossos Serviços</h2>
-            <p style="text-align: center; font-size: 18px; color: #ccc; margin-bottom: 50px;" class="fade-in">
-                Taxa de acerto comprovada de <strong style="color: #D4AF37;">86.7%</strong> | Use NORX e economize até 37%
-            </p>
+        <!-- NORXCOIN LAUNCH SECTION -->
+        <section class="token-launch-section">
+            <div class="container">
+                <div class="token-launch-content fade-in">
+                    <div class="hero-badge">🚀 Lançamento Oficial</div>
+                    <h2 class="section-title">NORXCOIN</h2>
+                    <p class="hero-subtitle">O Token que Revoluciona o Mercado FOREX</p>
+                    
+                    <div class="countdown-container">
+                        <div class="countdown-title">⏰ Lançamento em:</div>
+                        <div class="countdown" id="countdown">
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="days">00</span>
+                                <span class="countdown-label">Dias</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="hours">00</span>
+                                <span class="countdown-label">Horas</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="minutes">00</span>
+                                <span class="countdown-label">Min</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-number" id="seconds">00</span>
+                                <span class="countdown-label">Seg</span>
+                            </div>
+                        </div>
+                        <div class="launch-info">
+                            📅 10 de Junho de 2025 | 💰 Preço: $0.0004 | 🌐 PancakeSwap BSC
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AIRDROP SECTION -->
+        <section id="airdrop" class="airdrop-section">
+            <div class="container">
+                <div class="airdrop-content fade-in">
+                    <h2 class="airdrop-title">🎁 AIRDROP ESPECIAL</h2>
+                    
+                    <div class="airdrop-offer">
+                        <div class="offer-highlight">
+                            Invista $5 → Ganhe 100.000 NORX!
+                        </div>
+                        <p style="font-size: 18px; margin-bottom: 30px;">
+                            Adquira acesso à nossa <strong>Sala VIP de Sinais FOREX</strong> por apenas $5
+                            e receba <strong>100.000 tokens NORXCOIN</strong> completamente GRÁTIS!
+                        </p>
+                        
+                        <div class="value-grid">
+                            <div class="value-item">
+                                <div class="value-label">💰 Investimento</div>
+                                <div class="value-amount">$5.00</div>
+                            </div>
+                            <div class="value-item">
+                                <div class="value-label">🎯 Sala VIP</div>
+                                <div class="value-amount">$16.00</div>
+                            </div>
+                            <div class="value-item">
+                                <div class="value-label">🎁 100K Tokens</div>
+                                <div class="value-amount">$40.00</div>
+                            </div>
+                            <div class="value-item">
+                                <div class="value-label">🔥 Lucro Total</div>
+                                <div class="value-amount">$51.00</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 68, 68, 0.2); padding: 20px; border-radius: 15px; margin-top: 30px;">
+                            <strong style="color: #FFD700; font-size: 18px;">
+                                ⚠️ DEADLINE: 5 de Junho de 2025
+                            </strong><br>
+                            Após esta data, não haverá mais tokens de bônus!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOKEN INFO SECTION -->
+        <section id="token" class="token-section">
+            <div class="container">
+                <h2 class="section-title fade-in">💰 Tokenomics NORXCOIN</h2>
+                <p style="text-align: center; font-size: 18px; color: #ccc; margin-bottom: 50px;" class="fade-in">
+                    Supply Total: <strong style="color: #D4AF37;">1.5 Bilhões NORX</strong> | BSC (BEP-20) | 15% APR Staking
+                </p>
+                
+                <div class="token-grid">
+                    <div class="token-card fade-in">
+                        <div class="token-percentage">25%</div>
+                        <div class="token-amount">375M NORX</div>
+                        <div class="token-purpose">🔥 Queima Inicial</div>
+                    </div>
+                    <div class="token-card fade-in">
+                        <div class="token-percentage">25%</div>
+                        <div class="token-amount">375M NORX</div>
+                        <div class="token-purpose">💧 Liquidez</div>
+                    </div>
+                    <div class="token-card fade-in">
+                        <div class="token-percentage">20%</div>
+                        <div class="token-amount">300M NORX</div>
+                        <div class="token-purpose">🏢 Empresa</div>
+                    </div>
+                    <div class="token-card fade-in">
+                        <div class="token-percentage">20%</div>
+                        <div class="token-amount">300M NORX</div>
+                        <div class="token-purpose">🎁 Recompensas</div>
+                    </div>
+                    <div class="token-card fade-in">
+                        <div class="token-percentage">5%</div>
+                        <div class="token-amount">75M NORX</div>
+                        <div class="token-purpose">👥 Equipe</div>
+                    </div>
+                    <div class="token-card fade-in">
+                        <div class="token-percentage">5%</div>
+                        <div class="token-amount">75M NORX</div>
+                        <div class="token-purpose">🎯 Fundador</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROADMAP SECTION -->
+        <section id="roadmap" class="roadmap-section">
+            <div class="container">
+                <h2 class="section-title fade-in">🗺️ Roadmap de Desenvolvimento</h2>
+                
+                <div class="roadmap-timeline">
+                    <div class="roadmap-phase completed fade-in">
+                        <div class="phase-icon">✅</div>
+                        <div class="phase-content">
+                            <h3 class="phase-title">FASE 1 - Lançamento (Q2 2025)</h3>
+                            <div class="phase-date">✅ CONCLUÍDO</div>
+                            <ul class="phase-list">
+                                <li>Deploy dos contratos na BSC</li>
+                                <li>Lançamento na PancakeSwap (10/06/2025)</li>
+                                <li>Ativação do sistema de staking</li>
+                                <li>Integração com serviços da Norx Company</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-phase current fade-in">
+                        <div class="phase-icon">🎯</div>
+                        <div class="phase-content">
+                            <h3 class="phase-title">FASE 2 - Exchanges (Q3 2025)</h3>
+                            <div class="phase-date">📅 1 MÊS PÓS-LANÇAMENTO</div>
+                            <ul class="phase-list">
+                                <li>Listagem na MEXC Global</li>
+                                <li>Listagem na Gate.io</li>
+                                <li>Outras exchanges centralizadas</li>
+                                <li>Campanhas de marketing intensivas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="roadmap-phase future fade-in">
+                        <div class="phase-icon">🌐</div>
+                        <div class="phase-content">
+                            <h3 class="phase-title">FASE 3 - Expansão (Q4 2025)</h3>
+                            <div class="phase-date">🚀 3 MESES PÓS-LANÇAMENTO</div>
+                            <ul class="phase-list">
+                                <li>Expansão para outras blockchains</li>
+                                <li>Deploy na rede TRON</li>
+                                <li>Implementação de bridges entre redes</li>
+                                <li>🎨 Lançamento dos NFTs NORX</li>
+                                <li>Marketplace de NFTs integrado</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW TO BUY SECTION -->
+        <section id="como-comprar" class="how-to-section">
+            <div class="container">
+                <h2 class="section-title fade-in">🛒 Como Comprar NORXCOIN</h2>
+                
+                <div class="steps-grid">
+                    <div class="step-card fade-in">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Configure MetaMask</h3>
+                        <p class="step-description">
+                            Instale a carteira MetaMask e adicione a rede BSC. 
+                            Guarde sua seed phrase com segurança.
+                        </p>
+                    </div>
+                    
+                    <div class="step-card fade-in">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Compre BNB</h3>
+                        <p class="step-description">
+                            Adquira BNB em exchanges como Binance ou Coinbase. 
+                            Transfira para sua carteira MetaMask.
+                        </p>
+                    </div>
+                    
+                    <div class="step-card fade-in">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Use PancakeSwap</h3>
+                        <p class="step-description">
+                            Acesse pancakeswap.finance, conecte sua carteira 
+                            e troque BNB por NORXCOIN.
+                        </p>
+                    </div>
+                    
+                    <div class="step-card fade-in">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">Faça Staking</h3>
+                        <p class="step-description">
+                            Coloque seus tokens em staking para gerar 
+                            15% APR de renda passiva automática.
+                        </p>
+                    </div>
+                    
+                    <div class="step-card fade-in">
+                        <div class="step-number">5</div>
+                        <h3 class="step-title">Use nos Serviços</h3>
+                        <p class="step-description">
+                            Aproveite seus tokens para obter descontos 
+                            exclusivos em todos os serviços.
+                        </p>
+                    </div>
+                    
+                    <div class="step-card fade-in">
+                        <div class="step-number">6</div>
+                        <h3 class="step-title">Ganhe Mais</h3>
+                        <p class="step-description">
+                            Participe de airdrops, indique amigos e 
+                            aumente seus tokens constantemente.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEAM SECTION -->
+        <section id="equipe" class="team-section">
+            <div class="container">
+                <h2 class="section-title fade-in">👥 Nossa Equipe</h2>
+                <p style="text-align: center; font-size: 18px; color: #ccc; margin-bottom: 50px;" class="fade-in">
+                    Conheça os profissionais por trás da <strong style="color: #D4AF37;">NORX Company</strong>
+                </p>
+                
+                <div class="team-tree fade-in">
+                    <!-- Founder Level -->
+                    <div class="team-level founder-level">
+                        <div class="team-member founder">
+                            <div class="member-avatar">👑</div>
+                            <h3 class="member-name">Joao Nascimento</h3>
+                            <p class="member-role">Founder</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Connector Line -->
+                    <div class="tree-connector"></div>
+                    
+                    <!-- Executive Level -->
+                    <div class="team-level executive-level">
+                        <div class="team-member executive">
+                            <div class="member-avatar">💼</div>
+                            <h3 class="member-name">Luana</h3>
+                            <p class="member-role">Sócia Investidora</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Second Connector -->
+                    <div class="tree-connector-multi"></div>
+                    
+                    <!-- Team Level -->
+                    <div class="team-level managers-level">
+                        <div class="team-member">
+                            <div class="member-avatar">💻</div>
+                            <h3 class="member-name">Rafael</h3>
+                            <p class="member-role">Desenvolvedor Site</p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="member-avatar">🐦</div>
+                            <h3 class="member-name">Thalissa</h3>
+                            <p class="member-role">Twitter & LinkedIn Manager</p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="member-avatar">📺</div>
+                            <h3 class="member-name">Susana</h3>
+                            <p class="member-role">Youtube Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer id="contato" class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>NORX Company</h3>
+                        <a href="#services">Nossos Serviços</a>
+                        <a href="#airdrop">Airdrop Especial</a>
+                        <a href="#token">NORXCOIN</a>
+                        <a href="#roadmap">Roadmap</a>
+                        <a href="#equipe">Nossa Equipe</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Serviços</h3>
+                        <a href="#">Sala de Sinais FOREX</a>
+                        <a href="#">Robô Sala de Sinais</a>
+                        <a href="#">Robô de Notícias</a>
+                        <a href="#">Mesa Proprietária</a>
+                        <a href="#">Copytrade</a>
+                        <a href="#">Norx Investments</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Token NORX</h3>
+                        <a href="#">Documentação</a>
+                        <a href="#">Staking 15% APR</a>
+                        <a href="#">PancakeSwap</a>
+                        <a href="#">BSCScan</a>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h3>Contatos</h3>
+                        <a href="https://t.me/norxcompanyoficial" target="_blank">📱 Telegram Oficial</a>
+                        <a href="https://www.instagram.com/norxcompanyoficial" target="_blank">📷 Instagram</a>
+                        <a href="mailto:support@norxcompany.com.br">📧 E-mail Suporte</a>
+                        <a href="https://wa.me/5522997547731" target="_blank">💬 WhatsApp</a>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <p>&copy; 2025 NORX Company. Todos os direitos reservados.</p>
+                    <p>NORXCOIN é um token utilitário. Sempre faça sua própria pesquisa antes de investir.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+// Global variables
+let entryAnimationCompleted = false;
+
+// Entry Screen Animation
+function initEntryScreen() {
+    createParticles();
+    
+    const enterButton = document.getElementById('enterButton');
+    const entryScreen = document.getElementById('entryScreen');
+    
+    enterButton.addEventListener('click', function() {
+        // Hide entry screen
+        entryScreen.classList.add('hidden');
+        
+        // Start candles animation after a short delay
+        setTimeout(() => {
+            startCandlesAnimation();
+        }, 500);
+    });
+}
+
+// Create floating particles for entry screen
+function createParticles() {
+    const particlesBg = document.getElementById('particlesBg');
+    
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+        particlesBg.appendChild(particle);
+    }
+}
+
+// Candles Animation (Forex style - NETFLIX REAL!)
+function startCandlesAnimation() {
+    const candlesAnimation = document.getElementById('candlesAnimation');
+    const redCandle = document.getElementById('redCandle');
+    const greenCandle = document.getElementById('greenCandle');
+    const explosionCandle = document.getElementById('explosionCandle');
+    
+    candlesAnimation.classList.add('active');
+    
+    // Real forex candle sequence - growing from bottom up!
+    setTimeout(() => {
+        // 1st Candle: Red candle grows up (bearish)
+        redCandle.style.opacity = '1';
+        redCandle.querySelector('.candle-body').style.height = '120px';
+    }, 500);
+    
+    setTimeout(() => {
+        // 2nd Candle: Green candle grows up (bullish recovery)
+        greenCandle.style.opacity = '1';
+        greenCandle.querySelector('.candle-body').style.height = '150px';
+    }, 1200);
+    
+    setTimeout(() => {
+        // 3rd Candle: PUMP MONSTRO + NETFLIX EXPANSION!
+        explosionCandle.style.opacity = '1';
+        const candleBody = explosionCandle.querySelector('.candle-body');
+        
+        // CRESCIMENTO ABSURDO DE NOTÍCIA - 10000px!
+        candleBody.style.height = '10000px';
+        candleBody.style.transition = 'height 1.5s ease-out';
+        
+        // CÂMERA ACOMPANHA A VELA CRESCENDO!
+        setTimeout(() => {
+            candlesAnimation.style.transform = 'translateY(-80vh)';
+            candlesAnimation.style.transition = 'transform 1.2s ease-out';
+        }, 200);
+        
+        // DEPOIS EXPLODE O CÍRCULO NETFLIX!
+        setTimeout(() => {
+            candleBody.classList.add('netflix-expand');
             
-            <div class="services-grid">
-                <div class="service-card fade-in">
-                    <div class="service-icon">📈</div>
-                    <h3 class="service-name">Sala de Sinais FOREX</h3>
-                    <p class="service-description">
-                        Sinais profissionais com alta assertividade. 
-                        Análises diárias e suporte técnico especializado.
-                    </p>
-                    <div class="price-info">
-                        <div class="old-price">Normal: $16/mês</div>
-                        <div class="new-price">Com NORX: $10/mês</div>
-                        <div class="savings">💰 Economia de 37.5%</div>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-icon">🤖</div>
-                    <h3 class="service-name">Robô de Trading</h3>
-                    <p class="service-description">
-                        Sistema automatizado com IA. 
-                        Opera 24/7 seguindo estratégias testadas.
-                    </p>
-                    <div class="price-info">
-                        <div class="old-price">Normal: $36/mês</div>
-                        <div class="new-price">Com NORX: $30/mês</div>
-                        <div class="savings">💰 Economia de 16.7%</div>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-icon">🏦</div>
-                    <h3 class="service-name">Mesa Proprietária</h3>
-                    <p class="service-description">
-                        Capital de $50.000 para trading profissional. 
-                        Profit share de 80% para o trader.
-                    </p>
-                    <div class="price-info">
-                        <div class="old-price">Normal: $390/mês</div>
-                        <div class="new-price">Com NORX: $330/mês</div>
-                        <div class="savings">💰 Economia de 15.4%</div>
-                    </div>
-                </div>
-                
-                <div class="service-card fade-in">
-                    <div class="service-icon">💼</div>
-                    <h3 class="service-name">Norx Investments</h3>
-                    <p class="service-description">
-                        Fundo exclusivo com performance de 10% ao mês. 
-                        Distribuição de lucros + recompensas em NORX.
-                    </p>
-                    <div class="price-info">
-                        <div style="color: #D4AF37; font-weight: 700;">Investimentos:</div>
-                        <div class="new-price">R$ 5K → 1.000 NORX</div>
-                        <div class="new-price">R$ 50K → 1M NORX</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            // Segura a expansão por 1.5 segundos e vai direto pro conteúdo
+            setTimeout(() => {
+                candlesAnimation.style.display = 'none';
+                showMainContent();
+            }, 1500);
+        }, 1000);
+        
+    }, 2000);
+    
+    // Add candle animations (though now using CSS)
+    addCandleAnimations();
+}
 
-    <!-- TOKEN INFO SECTION -->
-    <section id="token" class="token-section">
-        <div class="container">
-            <h2 class="section-title fade-in">💰 Tokenomics NORXCOIN</h2>
-            <p style="text-align: center; font-size: 18px; color: #ccc; margin-bottom: 50px;" class="fade-in">
-                Supply Total: <strong style="color: #D4AF37;">1.5 Bilhões NORX</strong> | BSC (BEP-20) | 15% APR Staking
-            </p>
-            
-            <div class="token-grid">
-                <div class="token-card fade-in">
-                    <div class="token-percentage">25%</div>
-                    <div class="token-amount">375M NORX</div>
-                    <div class="token-purpose">🔥 Queima Inicial</div>
-                </div>
-                <div class="token-card fade-in">
-                    <div class="token-percentage">25%</div>
-                    <div class="token-amount">375M NORX</div>
-                    <div class="token-purpose">💧 Liquidez</div>
-                </div>
-                <div class="token-card fade-in">
-                    <div class="token-percentage">20%</div>
-                    <div class="token-amount">300M NORX</div>
-                    <div class="token-purpose">🏢 Empresa</div>
-                </div>
-                <div class="token-card fade-in">
-                    <div class="token-percentage">20%</div>
-                    <div class="token-amount">300M NORX</div>
-                    <div class="token-purpose">🎁 Recompensas</div>
-                </div>
-                <div class="token-card fade-in">
-                    <div class="token-percentage">5%</div>
-                    <div class="token-amount">75M NORX</div>
-                    <div class="token-purpose">👥 Equipe</div>
-                </div>
-                <div class="token-card fade-in">
-                    <div class="token-percentage">5%</div>
-                    <div class="token-amount">75M NORX</div>
-                    <div class="token-purpose">🎯 Fundador</div>
-                </div>
-            </div>
-        </div>
-    </section>
+// Add candle animations dynamically  
+function addCandleAnimations() {
+    // Animações agora estão no CSS com ::after
+    console.log('Netflix expansion ready!');
+}
 
-    <!-- HOW TO BUY SECTION -->
-    <section id="como-comprar" class="how-to-section">
-        <div class="container">
-            <h2 class="section-title fade-in">🛒 Como Comprar NORXCOIN</h2>
-            
-            <div class="steps-grid">
-                <div class="step-card fade-in">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Configure MetaMask</h3>
-                    <p class="step-description">
-                        Instale a carteira MetaMask e adicione a rede BSC. 
-                        Guarde sua seed phrase com segurança.
-                    </p>
-                </div>
-                
-                <div class="step-card fade-in">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">Compre BNB</h3>
-                    <p class="step-description">
-                        Adquira BNB em exchanges como Binance ou Coinbase. 
-                        Transfira para sua carteira MetaMask.
-                    </p>
-                </div>
-                
-                <div class="step-card fade-in">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">Use PancakeSwap</h3>
-                    <p class="step-description">
-                        Acesse pancakeswap.finance, conecte sua carteira 
-                        e troque BNB por NORXCOIN.
-                    </p>
-                </div>
-                
-                <div class="step-card fade-in">
-                    <div class="step-number">4</div>
-                    <h3 class="step-title">Faça Staking</h3>
-                    <p class="step-description">
-                        Coloque seus tokens em staking para gerar 
-                        15% APR de renda passiva automática.
-                    </p>
-                </div>
-                
-                <div class="step-card fade-in">
-                    <div class="step-number">5</div>
-                    <h3 class="step-title">Use nos Serviços</h3>
-                    <p class="step-description">
-                        Aproveite seus tokens para obter descontos 
-                        exclusivos em todos os serviços.
-                    </p>
-                </div>
-                
-                <div class="step-card fade-in">
-                    <div class="step-number">6</div>
-                    <h3 class="step-title">Ganhe Mais</h3>
-                    <p class="step-description">
-                        Participe de airdrops, indique amigos e 
-                        aumente seus tokens constantemente.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+// Create explosion particles
+function createExplosionParticles() {
+    const explosionParticles = document.getElementById('explosionParticles');
+    
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'explosion-particle';
+        
+        // Position at the explosion candle location
+        const centerX = window.innerWidth * 0.5 + 40; // Explosion candle position
+        const centerY = window.innerHeight * 0.8; // Bottom area where candles are
+        
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        
+        // Explosive direction - more upward and outward
+        const angle = (Math.PI * 2 * i) / 50;
+        const distance = 100 + Math.random() * 500;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance - Math.random() * 300; // Strong upward bias
+        
+        particle.style.setProperty('--dx', dx + 'px');
+        particle.style.setProperty('--dy', dy + 'px');
+        particle.style.animation = 'explodeParticle 2.5s ease-out forwards';
+        
+        // All particles green for the pump effect
+        particle.style.background = '#4CAF50';
+        particle.style.boxShadow = '0 0 10px #4CAF50';
+        
+        explosionParticles.appendChild(particle);
+        
+        // Remove particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 2500);
+    }
+}
 
-    <!-- FOOTER -->
-    <footer id="contato" class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>NORX Company</h3>
-                    <a href="#airdrop">Airdrop Especial</a>
-                    <a href="#services">Nossos Serviços</a>
-                    <a href="#token">NORXCOIN</a>
-                    <a href="#como-comprar">Como Comprar</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Serviços</h3>
-                    <a href="#">Sala de Sinais FOREX</a>
-                    <a href="#">Robô de Trading</a>
-                    <a href="#">Mesa Proprietária</a>
-                    <a href="#">Norx Investments</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Token NORX</h3>
-                    <a href="#">Documentação</a>
-                    <a href="#">Staking 15% APR</a>
-                    <a href="#">PancakeSwap</a>
-                    <a href="#">BSCScan</a>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>Contatos</h3>
-                    <a href="https://t.me/norxcompanyoficial" target="_blank">📱 Telegram Oficial</a>
-                    <a href="https://www.instagram.com/norxcompanyoficial" target="_blank">📷 Instagram</a>
-                    <a href="mailto:support@norxcompany.com.br">📧 E-mail Suporte</a>
-                    <a href="https://wa.me/5522997547731" target="_blank">💬 WhatsApp</a>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 NORX Company. Todos os direitos reservados.</p>
-                <p>NORXCOIN é um token utilitário. Sempre faça sua própria pesquisa antes de investir.</p>
-            </div>
-        </div>
-    </footer>
+// Show main content
+function showMainContent() {
+    const mainContent = document.getElementById('mainContent');
+    mainContent.classList.add('visible');
+    mainContent.style.opacity = '1';
+    
+    entryAnimationCompleted = true;
+    
+    // Initialize main page functionality
+    initMainPage();
+}
 
-    <script src="script.js"></script>
+// Initialize main page functionality
+function initMainPage() {
+    // Start countdown timer
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Initialize scroll effects
+    handleHeaderScroll();
+    handleScrollAnimations();
+    
+    // Initialize smooth scroll
+    initSmoothScroll();
+
+    // Add hover effects to cards
+    addCardHoverEffects();
+
+    // Log initialization
+    console.log('NORX Company Landing Page Loaded Successfully! 🚀');
+    console.log('Entry animation completed. Main content visible.');
+}
+
+// Countdown Timer
+function updateCountdown() {
+    const targetDate = new Date('2025-06-10T14:00:00Z').getTime();
+    const now = new Date().getTime();
+    const difference = targetDate - now;
+
+    if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    } else {
+        document.getElementById('countdown').innerHTML = 
+            '<div style="font-size: 24px; color: #4CAF50; font-weight: 900;">🚀 NORXCOIN LANÇADO!</div>';
+    }
+}
+
+// Scroll Animations
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+function handleScrollAnimations() {
+    const elements = document.querySelectorAll('.fade-in');
+    elements.forEach(element => {
+        if (isInViewport(element) || element.getBoundingClientRect().top < window.innerHeight) {
+            element.classList.add('visible');
+        }
+    });
+}
+
+// Smooth Scroll
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// Header scroll effect
+function handleHeaderScroll() {
+    window.addEventListener('scroll', () => {
+        if (!entryAnimationCompleted) return;
+        
+        const header = document.querySelector('.header');
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(0, 0, 0, 0.98)';
+        } else {
+            header.style.background = 'rgba(0, 0, 0, 0.95)';
+        }
+        
+        handleScrollAnimations();
+    });
+}
+
+// Add hover effects to cards
+function addCardHoverEffects() {
+    const cards = document.querySelectorAll('.service-card, .token-card, .step-card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+}
+
+// Copy contract address
+function copyContract() {
+    const contractAddress = '0x9F8ace87A43851aCc21B6a00A84b4F9088563179';
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(contractAddress).then(() => {
+            showNotification('Endereço do contrato copiado!', 'success');
+        }).catch(err => {
+            console.error('Erro ao copiar:', err);
+        });
+    } else {
+        // Fallback para navegadores mais antigos
+        const textArea = document.createElement('textarea');
+        textArea.value = contractAddress;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            showNotification('Endereço do contrato copiado!', 'success');
+        } catch (err) {
+            console.error('Erro ao copiar:', err);
+        }
+        document.body.removeChild(textArea);
+    }
+}
+
+// Show notification
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : '#D4AF37'};
+        color: ${type === 'success' ? 'white' : '#000'};
+        padding: 15px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        z-index: 10000;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.style.opacity = '1';
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Hide notification
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Performance monitoring
+function trackPerformance() {
+    const stats = {
+        totalUsers: 247,
+        winRate: 93.0,
+        trades: 57,
+        wins: 53,
+        losses: 4,
+        monthlyClients: 19,
+        investmentReturn: 13.89
+    };
+    
+    console.log('NORX Performance Stats:', stats);
+    return stats;
+}
+
+// Initialize everything when DOM is loaded
+function init() {
+    // Initialize entry screen
+    initEntryScreen();
+    
+    // Track performance
+    trackPerformance();
+    
+    console.log('NORX Company - Entry screen initialized');
+    console.log('Click "ENTRAR" to begin the epic animation sequence!');
+}
+
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', init);
+
+// Additional utility functions
+const utils = {
+    // Format numbers with commas
+    formatNumber: function(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+
+    // Validate email format
+    validateEmail: function(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    },
+
+    // Get current timestamp
+    getCurrentTimestamp: function() {
+        return new Date().toISOString();
+    },
+
+    // Scroll to top
+    scrollToTop: function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    },
+
+    // Check if user is on mobile
+    isMobile: function() {
+        return window.innerWidth <= 768;
+    },
+
+    // Calculate investment returns
+    calculateROI: function(investment, returns) {
+        return ((returns - investment) / investment * 100).toFixed(2);
+    },
+
+    // Generate random particle positions
+    generateParticlePosition: function() {
+        return {
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            size: Math.random() * 4 + 2,
+            speed: Math.random() * 2 + 1
+        };
+    }
+};
+
+// Expose utils globally
+window.norxUtils = utils;
+
+// Easter egg: Konami code
+let konamiCode = [];
+const konamiSequence = [
+    'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+    'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+    'KeyB', 'KeyA'
+];
+
+document.addEventListener('keydown', function(e) {
+    konamiCode.push(e.code);
+    konamiCode = konamiCode.slice(-konamiSequence.length);
+    
+    if (konamiCode.join('') === konamiSequence.join('')) {
+        showNotification('🚀 Código Konami ativado! Easter egg desbloqueado!', 'success');
+        // Add special effects
+        document.body.style.animation = 'rainbow 2s ease-in-out';
+        setTimeout(() => {
+            document.body.style.animation = '';
+        }, 2000);
+    }
+});
+
+// Add rainbow animation for easter egg
+const rainbowStyle = document.createElement('style');
+rainbowStyle.textContent = `
+    @keyframes rainbow {
+        0% { filter: hue-rotate(0deg); }
+        25% { filter: hue-rotate(90deg); }
+        50% { filter: hue-rotate(180deg); }
+        75% { filter: hue-rotate(270deg); }
+        100% { filter: hue-rotate(360deg); }
+    }
+`;
+document.head.appendChild(rainbowStyle);
+    </script>
 </body>
+<script src="script.js"></script>
 </html>
