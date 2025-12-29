@@ -4,23 +4,14 @@
 
 // Contract Configuration
 const CONFIG = {
-    // NORXCOIN Contract
     tokenAddress: '0x9F8ace87A43851aCc21B6a00A84b4F9088563179',
-    
-    // Staking Contract
     stakingAddress: '0x5b5B4d0bfF42E152E8aA9E614E948797DBF1FB65',
-    
-    // BSC Network
     chainId: 56,
     chainIdHex: '0x38',
     chainName: 'Binance Smart Chain',
     rpcUrl: 'https://bsc-dataseed.binance.org/',
     explorerUrl: 'https://bscscan.com/',
-    
-    // GeckoTerminal Pool
     geckoTerminalPoolUrl: 'https://api.geckoterminal.com/api/v2/networks/bsc/pools/0x8ca34c2cb4516f47b843beda65542df6523b61c8d25af4eb22eb98a64f8bb02f',
-    
-    // PancakeSwap
     pancakeSwapUrl: 'https://pancakeswap.finance/swap?outputCurrency=0x9F8ace87A43851aCc21B6a00A84b4F9088563179'
 };
 
@@ -56,11 +47,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     
     // Hide loading screen
     setTimeout(() => {
-        document.getElementById('loadingScreen').classList.add('hidden');
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+        }
     }, 1500);
     
     // Initialize components
-    initializeWeb3();
+    await initializeWeb3();
     initializeEventListeners();
     initializeTokenomicsChart();
     initGrupbuyCountdown();
@@ -119,20 +113,29 @@ function initGrupbuyCountdown() {
 // ===============================================
 
 async function initializeWeb3() {
-    if (typeof window.ethereum !== 'undefined') {
-        console.log('MetaMask detected');
-        web3 = new Web3(window.ethereum);
-        
-        const accounts = await web3.eth.getAccounts();
-        if (accounts.length > 0) {
-            await handleAccountsChanged(accounts);
+    try {
+        if (typeof window.ethereum !== 'undefined') {
+            console.log('MetaMask detected');
+            web3 = new Web3(window.ethereum);
+            
+            // Check if already connected (don't auto-connect)
+            const accounts = await web3.eth.getAccounts();
+            if (accounts.length > 0) {
+                await handleAccountsChanged(accounts);
+            }
+            
+            // Listen for account changes
+            window.ethereum.on('accountsChanged', handleAccountsChanged);
+            
+            // Listen for network changes
+            window.ethereum.on('chainChanged', handleChainChanged);
+        } else {
+            console.log('MetaMask not detected');
+            // Use read-only provider for price data
+            web3 = new Web3(new Web3.providers.HttpProvider(CONFIG.rpcUrl));
         }
-        
-        window.ethereum.on('accountsChanged', handleAccountsChanged);
-        window.ethereum.on('chainChanged', handleChainChanged);
-    } else {
-        console.log('MetaMask not detected');
-        web3 = new Web3(new Web3.providers.HttpProvider(CONFIG.rpcUrl));
+    } catch (error) {
+        console.error('Error initializing Web3:', error);
     }
 }
 
@@ -144,13 +147,16 @@ async function connectWallet() {
     }
     
     try {
+        // Request account access
         const accounts = await window.ethereum.request({ 
             method: 'eth_requestAccounts' 
         });
         
+        // Check network
         const chainId = await web3.eth.getChainId();
         if (chainId !== CONFIG.chainId) {
             await switchNetwork();
+            return; // Exit and let the network switch handle reconnection
         }
         
         await handleAccountsChanged(accounts);
@@ -158,24 +164,34 @@ async function connectWallet() {
         
     } catch (error) {
         console.error('Error connecting wallet:', error);
-        showToast('Erro ao conectar carteira', 'error');
+        if (error.code === 4001) {
+            showToast('Conexão cancelada pelo usuário', 'warning');
+        } else {
+            showToast('Erro ao conectar carteira', 'error');
+        }
     }
 }
 
 async function handleAccountsChanged(accounts) {
-    if (accounts.length === 0) {
-        userAccount = null;
-        updateWalletUI(false);
-    } else {
-        userAccount = accounts[0];
-        updateWalletUI(true);
-        
-        if (web3) {
-            tokenContract = new web3.eth.Contract(TOKEN_ABI, CONFIG.tokenAddress);
-            stakingContract = new web3.eth.Contract(STAKING_ABI, CONFIG.stakingAddress);
-            await updateStakingInfo();
-            await updateBalance();
+    try {
+        if (accounts.length === 0) {
+            userAccount = null;
+            updateWalletUI(false);
+        } else {
+            userAccount = accounts[0];
+            updateWalletUI(true);
+            
+            if (web3) {
+                tokenContract = new web3.eth.Contract(TOKEN_ABI, CONFIG.tokenAddress);
+                stakingContract = new web3.eth.Contract(STAKING_ABI, CONFIG.stakingAddress);
+                
+                // Update balance and staking info
+                await updateBalance();
+                await updateStakingInfo();
+            }
         }
+    } catch (error) {
+        console.error('Error in handleAccountsChanged:', error);
     }
 }
 
@@ -189,6 +205,7 @@ async function switchNetwork() {
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: CONFIG.chainIdHex }]
         });
+        showToast('Rede alterada para BSC', 'success');
     } catch (switchError) {
         if (switchError.code === 4902) {
             try {
@@ -206,10 +223,14 @@ async function switchNetwork() {
                         blockExplorerUrls: [CONFIG.explorerUrl]
                     }]
                 });
+                showToast('Rede BSC adicionada com sucesso', 'success');
             } catch (addError) {
                 console.error('Error adding network:', addError);
                 showToast('Erro ao adicionar rede BSC', 'error');
             }
+        } else {
+            console.error('Error switching network:', switchError);
+            showToast('Erro ao trocar de rede', 'error');
         }
     }
 }
@@ -222,8 +243,15 @@ async function updateBalance() {
         const decimals = await tokenContract.methods.decimals().call();
         const formattedBalance = (balance / Math.pow(10, decimals)).toFixed(2);
         
-        document.getElementById('walletBalance').textContent = formattedBalance;
-        document.querySelector('.wallet-balance').textContent = `${formattedBalance} NORX`;
+        const walletBalanceEl = document.getElementById('walletBalance');
+        const walletBalanceInfoEl = document.querySelector('.wallet-balance');
+        
+        if (walletBalanceEl) {
+            walletBalanceEl.textContent = formattedBalance;
+        }
+        if (walletBalanceInfoEl) {
+            walletBalanceInfoEl.textContent = `${formattedBalance} NORX`;
+        }
     } catch (error) {
         console.error('Error updating balance:', error);
     }
@@ -233,21 +261,26 @@ function updateWalletUI(connected) {
     const connectBtn = document.getElementById('connectWallet');
     const walletInfo = document.getElementById('walletInfo');
     const stakeBtn = document.getElementById('stakeBtn');
+    const walletAddressEl = document.querySelector('.wallet-address');
     
     if (connected && userAccount) {
-        connectBtn.style.display = 'none';
-        walletInfo.style.display = 'flex';
+        if (connectBtn) connectBtn.style.display = 'none';
+        if (walletInfo) walletInfo.style.display = 'flex';
         
+        // Show shortened address
         const shortAddress = `${userAccount.slice(0, 6)}...${userAccount.slice(-4)}`;
-        document.querySelector('.wallet-address').textContent = shortAddress;
+        if (walletAddressEl) {
+            walletAddressEl.textContent = shortAddress;
+        }
         
+        // Enable staking button
         if (stakeBtn) {
             stakeBtn.disabled = false;
             stakeBtn.textContent = 'Fazer Staking';
         }
     } else {
-        connectBtn.style.display = 'flex';
-        walletInfo.style.display = 'none';
+        if (connectBtn) connectBtn.style.display = 'flex';
+        if (walletInfo) walletInfo.style.display = 'none';
         
         if (stakeBtn) {
             stakeBtn.disabled = true;
@@ -266,8 +299,10 @@ async function stake() {
         return;
     }
     
-    const amount = document.getElementById('stakeAmount').value;
-    const poolId = document.getElementById('poolSelect').value;
+    const amountInput = document.getElementById('stakeAmount');
+    const amount = amountInput ? amountInput.value : null;
+    const poolSelect = document.getElementById('poolSelect');
+    const poolId = poolSelect ? poolSelect.value : 0;
     
     if (!amount || amount <= 0) {
         showToast('Digite uma quantidade válida', 'error');
@@ -292,14 +327,14 @@ async function stake() {
         await updateStakingInfo();
         await updateBalance();
         
-        document.getElementById('stakeAmount').value = '';
+        if (amountInput) amountInput.value = '';
         
     } catch (error) {
         console.error('Staking error:', error);
-        if (error.message.includes('User denied')) {
+        if (error.code === 4001 || error.message.includes('User denied')) {
             showToast('Transação cancelada pelo usuário', 'warning');
         } else {
-            showToast('Erro ao fazer staking: ' + error.message, 'error');
+            showToast('Erro ao fazer staking: ' + (error.message || 'Erro desconhecido'), 'error');
         }
     }
 }
@@ -371,10 +406,10 @@ async function approveTokens(amount) {
         
     } catch (error) {
         console.error('Approval error:', error);
-        if (error.message.includes('User denied')) {
+        if (error.code === 4001 || error.message.includes('User denied')) {
             showToast('Aprovação cancelada pelo usuário', 'warning');
         } else {
-            showToast('Erro ao aprovar tokens: ' + error.message, 'error');
+            showToast('Erro ao aprovar tokens: ' + (error.message || 'Erro desconhecido'), 'error');
         }
         return false;
     }
@@ -415,12 +450,14 @@ async function updateStakingInfo() {
         
         updatePositionsUI(positions);
         
-        if (document.getElementById('totalStaked')) {
-            document.getElementById('totalStaked').textContent = `${totalStaked.toFixed(2)} NORX`;
+        const totalStakedEl = document.getElementById('totalStaked');
+        if (totalStakedEl) {
+            totalStakedEl.textContent = `${totalStaked.toFixed(2)} NORX`;
         }
         
-        if (document.getElementById('pendingRewards')) {
-            document.getElementById('pendingRewards').textContent = `${totalRewards.toFixed(4)} NORX`;
+        const pendingRewardsEl = document.getElementById('pendingRewards');
+        if (pendingRewardsEl) {
+            pendingRewardsEl.textContent = `${totalRewards.toFixed(4)} NORX`;
         }
         
         const rewardsSection = document.querySelector('.rewards-section');
@@ -489,8 +526,13 @@ function getPoolName(poolId) {
 }
 
 function setMaxStake() {
-    const balance = document.getElementById('walletBalance').textContent;
-    document.getElementById('stakeAmount').value = balance;
+    const balanceEl = document.getElementById('walletBalance');
+    const amountInput = document.getElementById('stakeAmount');
+    
+    if (balanceEl && amountInput) {
+        const balance = balanceEl.textContent;
+        amountInput.value = balance;
+    }
 }
 
 // ===============================================
@@ -499,20 +541,8 @@ function setMaxStake() {
 
 async function updatePriceData() {
     try {
-        const proxyUrl = 'https://api.codetabs.com/v1/proxy?quest=';
-        const apiUrl = CONFIG.geckoTerminalPoolUrl;
-        
-        let response;
-        let data;
-        
-        try {
-            response = await fetch(apiUrl);
-            data = await response.json();
-        } catch (corsError) {
-            console.log('Direct fetch failed, trying with proxy...');
-            response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
-            data = await response.json();
-        }
+        const response = await fetch(CONFIG.geckoTerminalPoolUrl);
+        const data = await response.json();
         
         if (data && data.data && data.data.attributes) {
             const poolData = data.data.attributes;
@@ -526,28 +556,25 @@ async function updatePriceData() {
             const circulatingSupply = totalSupply - burnedTokens;
             const marketCap = priceUSD * circulatingSupply;
             
-            const liquidity = parseFloat(poolData.reserve_in_usd) || 0;
-            
-            document.getElementById('currentPrice').querySelector('.price-usd').textContent = 
-                priceUSD < 0.01 ? `$${priceUSD.toFixed(8)}` : `$${priceUSD.toFixed(4)}`;
+            const priceUsdEl = document.getElementById('currentPrice');
+            if (priceUsdEl) {
+                const priceSpan = priceUsdEl.querySelector('.price-usd');
+                if (priceSpan) {
+                    priceSpan.textContent = priceUSD < 0.01 ? `$${priceUSD.toFixed(8)}` : `$${priceUSD.toFixed(4)}`;
+                }
+            }
             
             const changeElement = document.getElementById('priceChange');
-            changeElement.textContent = `${priceChange24h > 0 ? '+' : ''}${priceChange24h.toFixed(2)}%`;
-            changeElement.className = priceChange24h > 0 ? 'price-change positive' : 'price-change negative';
-            
-            document.getElementById('marketCap').textContent = formatNumber(marketCap);
-            document.getElementById('volume24h').textContent = formatNumber(volume24h);
-            
-            if (document.getElementById('liquidity')) {
-                document.getElementById('liquidity').textContent = formatNumber(liquidity);
+            if (changeElement) {
+                changeElement.textContent = `${priceChange24h > 0 ? '+' : ''}${priceChange24h.toFixed(2)}%`;
+                changeElement.className = priceChange24h > 0 ? 'price-change positive' : 'price-change negative';
             }
             
-            const usdToBrl = 5.50;
-            const priceBRL = priceUSD * usdToBrl;
-            if (document.getElementById('priceBRL')) {
-                document.getElementById('priceBRL').textContent = 
-                    priceBRL < 0.01 ? `R$${priceBRL.toFixed(6)}` : `R$${priceBRL.toFixed(4)}`;
-            }
+            const marketCapEl = document.getElementById('marketCap');
+            if (marketCapEl) marketCapEl.textContent = formatNumber(marketCap);
+            
+            const volume24hEl = document.getElementById('volume24h');
+            if (volume24hEl) volume24hEl.textContent = formatNumber(volume24h);
             
             console.log('✅ Price updated from GeckoTerminal:', priceUSD);
             
@@ -564,20 +591,31 @@ async function updatePriceData() {
 
 function updatePriceWithFallback() {
     const priceData = {
-        price: 0.000425,
-        change24h: 15.67,
-        marketCap: 637500,
-        volume24h: 125000
+        price: 0.0288,
+        change24h: 0,
+        marketCap: 32400000,
+        volume24h: 0
     };
     
-    document.getElementById('currentPrice').querySelector('.price-usd').textContent = `$${priceData.price.toFixed(6)}`;
+    const priceUsdEl = document.getElementById('currentPrice');
+    if (priceUsdEl) {
+        const priceSpan = priceUsdEl.querySelector('.price-usd');
+        if (priceSpan) {
+            priceSpan.textContent = `$${priceData.price.toFixed(4)}`;
+        }
+    }
     
     const changeElement = document.getElementById('priceChange');
-    changeElement.textContent = `${priceData.change24h > 0 ? '+' : ''}${priceData.change24h.toFixed(2)}%`;
-    changeElement.className = priceData.change24h > 0 ? 'price-change positive' : 'price-change negative';
+    if (changeElement) {
+        changeElement.textContent = `${priceData.change24h.toFixed(2)}%`;
+        changeElement.className = 'price-change';
+    }
     
-    document.getElementById('marketCap').textContent = formatNumber(priceData.marketCap);
-    document.getElementById('volume24h').textContent = formatNumber(priceData.volume24h);
+    const marketCapEl = document.getElementById('marketCap');
+    if (marketCapEl) marketCapEl.textContent = formatNumber(priceData.marketCap);
+    
+    const volume24hEl = document.getElementById('volume24h');
+    if (volume24hEl) volume24hEl.textContent = formatNumber(priceData.volume24h);
 }
 
 // ===============================================
@@ -661,6 +699,7 @@ function initializeEventListeners() {
 
 function handleScrollEffects() {
     const header = document.querySelector('.header');
+    if (!header) return;
     
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -688,7 +727,9 @@ function handleScrollEffects() {
 
 function toggleMobileMenu() {
     const navMenu = document.querySelector('.nav-menu');
-    navMenu.classList.toggle('mobile-active');
+    if (navMenu) {
+        navMenu.classList.toggle('mobile-active');
+    }
 }
 
 function scrollToSection(sectionId) {
@@ -699,7 +740,10 @@ function scrollToSection(sectionId) {
 }
 
 function copyContract() {
-    const contractAddress = document.getElementById('contractAddress').textContent;
+    const contractAddressEl = document.getElementById('contractAddress');
+    if (!contractAddressEl) return;
+    
+    const contractAddress = contractAddressEl.textContent;
     navigator.clipboard.writeText(contractAddress).then(() => {
         showToast('Endereço do contrato copiado!', 'success');
     }).catch(err => {
@@ -710,11 +754,12 @@ function copyContract() {
 
 function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
+    if (!container) return;
     
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     
-    const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+    const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
     
     toast.innerHTML = `
         <span class="toast-icon">${icon}</span>
@@ -726,7 +771,9 @@ function showToast(message, type = 'info') {
     setTimeout(() => {
         toast.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => {
-            container.removeChild(toast);
+            if (container.contains(toast)) {
+                container.removeChild(toast);
+            }
         }, 300);
     }, 5000);
 }
