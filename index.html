@@ -49,7 +49,7 @@
                 </nav>
 
                 <div class="header-actions">
-                    <<button id="connectWalletBtn" class="btn btn-primary" onclick="connectWallet()">Conectar Carteira</button>">
+                    <button id="connectWallet" class="wallet-btn">
                         <span class="wallet-icon">🔗</span>
                         <span class="wallet-text">Conectar Carteira</span>
                     </button>
@@ -384,25 +384,6 @@
                     </p>
                 </div>
             </div>
-
-            <!-- Transaction Tax -->
-            <div class="tax-info">
-                <h3 class="tax-title">Taxa de Transação: 3%</h3>
-                <div class="tax-breakdown">
-                    <div class="tax-item">
-                        <span class="tax-icon">💧</span>
-                        <span class="tax-desc">1% Auto-Liquidez</span>
-                    </div>
-                    <div class="tax-item">
-                        <span class="tax-icon">💎</span>
-                        <span class="tax-desc">1% Rewards Staking</span>
-                    </div>
-                    <div class="tax-item">
-                        <span class="tax-icon">📈</span>
-                        <span class="tax-desc">1% Marketing</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -423,11 +404,11 @@
                     </div>
                     <div class="staking-stat">
                         <div class="staking-stat-label">APY Atual</div>
-                        <div class="staking-stat-value" id="currentAPY">120%</div>
+                        <div class="staking-stat-value" id="currentAPY">20%</div>
                     </div>
                     <div class="staking-stat">
-                        <div class="staking-stat-label">Recompensas/Dia</div>
-                        <div class="staking-stat-value" id="dailyRewards">0.33%</div>
+                        <div class="staking-stat-label">Recompensas/Ano</div>
+                        <div class="staking-stat-value" id="dailyRewards">20%</div>
                     </div>
                 </div>
 
@@ -454,9 +435,7 @@
                         <div class="pool-selector">
                             <label class="input-label">Selecionar Pool</label>
                             <select id="poolSelect" class="pool-select">
-                                <option value="0">Pool Flexível (Sem Lock)</option>
-                                <option value="1">Pool 30 dias (APY +20%)</option>
-                                <option value="2">Pool 90 dias (APY +50%)</option>
+                                <option value="0">Pool 90 dias (APY 20%)</option>
                             </select>
                         </div>
 
