@@ -424,6 +424,11 @@ a:hover {
     width: 100%;
 }
 
+.btn-small {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
 /* Contract Info */
 .contract-info {
     margin-top: 40px;
@@ -517,7 +522,8 @@ a:hover {
 .about-section,
 .tokenomics-section,
 .staking-section,
-.roadmap-section {
+.roadmap-section,
+.team-section {
     padding: 80px 0;
 }
 
@@ -579,6 +585,176 @@ a:hover {
     font-size: 14px;
     color: var(--text-secondary);
     line-height: 1.6;
+}
+
+/* Grupbuy Section */
+.grupbuy-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    position: relative;
+}
+
+.grupbuy-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.grupbuy-info {
+    color: #fff;
+}
+
+.grupbuy-title {
+    font-size: 2rem;
+    color: #D4AF37;
+    margin-bottom: 20px;
+}
+
+.grupbuy-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+.grupbuy-benefits {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.grupbuy-benefits h4 {
+    color: #D4AF37;
+    margin-bottom: 15px;
+}
+
+.benefit-list {
+    list-style: none;
+    padding: 0;
+}
+
+.benefit-list li {
+    padding: 8px 0;
+    color: #fff;
+}
+
+.grupbuy-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.grupbuy-stat {
+    text-align: center;
+    background: rgba(212, 175, 55, 0.05);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.grupbuy-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #D4AF37;
+}
+
+.grupbuy-stat-label {
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.grupbuy-showcase {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.showcase-card {
+    background: rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.showcase-card:hover {
+    transform: translateY(-5px);
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.showcase-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.showcase-card h4 {
+    color: #D4AF37;
+    margin-bottom: 10px;
+}
+
+.showcase-card p {
+    color: #ccc;
+}
+
+/* Countdown Timer */
+.countdown-container {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border-radius: 25px;
+    padding: 40px;
+    margin-bottom: 30px;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.countdown-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #D4AF37;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#grupbuyCountdown {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+#grupbuyCountdown .countdown-item {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 25px 30px;
+    text-align: center;
+    min-width: 100px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+#grupbuyCountdown .countdown-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: #D4AF37;
+    display: block;
+    line-height: 1;
+}
+
+#grupbuyCountdown .countdown-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 10px;
+    display: block;
+    letter-spacing: 1px;
+}
+
+.grupbuy-cta {
+    text-align: center;
 }
 
 /* Tokenomics */
@@ -644,44 +820,6 @@ a:hover {
 
 .token-amount {
     font-size: 12px;
-    color: var(--text-secondary);
-}
-
-/* Tax Info */
-.tax-info {
-    background: var(--card-bg);
-    border: 2px solid var(--primary-color);
-    border-radius: 16px;
-    padding: 30px;
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.tax-title {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-}
-
-.tax-breakdown {
-    display: flex;
-    justify-content: space-around;
-    gap: 20px;
-}
-
-.tax-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-}
-
-.tax-icon {
-    font-size: 24px;
-}
-
-.tax-desc {
-    font-size: 14px;
     color: var(--text-secondary);
 }
 
@@ -820,6 +958,40 @@ a:hover {
     padding: 16px;
 }
 
+.position-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.position-pool {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.position-locked {
+    font-size: 12px;
+    color: var(--danger-color);
+}
+
+.position-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.position-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.text-success {
+    color: var(--accent-color);
+}
+
 .rewards-section {
     margin-top: 24px;
     padding-top: 24px;
@@ -929,126 +1101,67 @@ a:hover {
     margin-bottom: 4px;
 }
 
-/* Footer */
-.footer {
-    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-    padding: 50px 0 20px;
-    margin-top: 80px;
+/* Team Section */
+.team-section {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
 }
 
-/* Norx Grupbuy Section */
-.grupbuy-section {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    position: relative;
-}
-
-.grupbuy-content {
+.team-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
     margin-top: 40px;
 }
 
-.grupbuy-info {
-    color: #fff;
+.team-card {
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    transition: var(--transition-fast);
 }
 
-.grupbuy-title {
-    font-size: 2rem;
-    color: #D4AF37;
+.team-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-large);
+}
+
+.team-icon {
+    font-size: 64px;
     margin-bottom: 20px;
 }
 
-.grupbuy-description {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #ccc;
-    margin-bottom: 30px;
+.team-role {
+    font-size: 14px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-weight: 600;
 }
 
-.grupbuy-benefits {
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 30px;
-}
-
-.grupbuy-benefits h4 {
-    color: #D4AF37;
-    margin-bottom: 15px;
-}
-
-.benefit-list {
-    list-style: none;
-    padding: 0;
-}
-
-.benefit-list li {
-    padding: 8px 0;
-    color: #fff;
-}
-
-.grupbuy-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.grupbuy-stat {
-    text-align: center;
-    background: rgba(212, 175, 55, 0.05);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.grupbuy-stat-number {
-    font-size: 2rem;
+.team-member {
+    font-size: 20px;
     font-weight: 700;
-    color: #D4AF37;
+    color: var(--text-primary);
+    margin-bottom: 8px;
 }
 
-.grupbuy-stat-label {
-    color: #999;
-    font-size: 0.9rem;
-    margin-top: 5px;
+.team-member a {
+    color: var(--text-primary);
+    transition: var(--transition-fast);
 }
 
-.grupbuy-showcase {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+.team-member a:hover {
+    color: var(--primary-color);
 }
 
-.showcase-card {
-    background: rgba(212, 175, 55, 0.05);
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: 15px;
-    padding: 25px;
-    transition: all 0.3s ease;
-}
-
-.showcase-card:hover {
-    transform: translateY(-5px);
-    border-color: #D4AF37;
-    background: rgba(212, 175, 55, 0.1);
-}
-
-.showcase-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-}
-
-.showcase-card h4 {
-    color: #D4AF37;
-    margin-bottom: 10px;
-}
-
-.showcase-card p {
-    color: #ccc;
+.team-members {
+    font-size: 16px;
+    color: var(--text-secondary);
 }
 
 /* Footer */
@@ -1164,6 +1277,17 @@ a:hover {
     }
 }
 
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
 .toast.success {
     border-color: var(--accent-color);
 }
@@ -1209,6 +1333,10 @@ a:hover {
     
     .footer-links {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .grupbuy-content {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -1260,6 +1388,19 @@ a:hover {
         grid-column: 2 !important;
         text-align: left !important;
     }
+    
+    #grupbuyCountdown {
+        gap: 15px;
+    }
+    
+    #grupbuyCountdown .countdown-item {
+        padding: 15px;
+        min-width: 70px;
+    }
+    
+    #grupbuyCountdown .countdown-value {
+        font-size: 32px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1279,10 +1420,6 @@ a:hover {
         grid-template-columns: 1fr;
     }
     
-    .tax-breakdown {
-        flex-direction: column;
-    }
-    
     .footer-links {
         grid-template-columns: 1fr;
     }
@@ -1292,79 +1429,5 @@ a:hover {
 .text-center { text-align: center; }
 .text-left { text-align: left; }
 .text-right { text-align: right; }
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mb-4 { margin-bottom: 2rem; }
 .hidden { display: none !important; }
 .visible { display: block !important; }
-
-/* Countdown Timer for Grupbuy */
-.countdown-container {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
-    border-radius: 25px;
-    padding: 40px;
-    margin-bottom: 30px;
-    border: 2px solid rgba(212, 175, 55, 0.3);
-}
-
-.countdown-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: #D4AF37;
-    text-align: center;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-#grupbuyCountdown {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-}
-
-#grupbuyCountdown .countdown-item {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 15px;
-    padding: 25px 30px;
-    text-align: center;
-    min-width: 100px;
-    border: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-#grupbuyCountdown .countdown-value {
-    font-size: 48px;
-    font-weight: 700;
-    color: #D4AF37;
-    display: block;
-    line-height: 1;
-}
-
-#grupbuyCountdown .countdown-label {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
-    margin-top: 10px;
-    display: block;
-    letter-spacing: 1px;
-}
-
-@media (max-width: 768px) {
-    #grupbuyCountdown {
-        gap: 15px;
-    }
-    
-    #grupbuyCountdown .countdown-item {
-        padding: 15px;
-        min-width: 70px;
-    }
-    
-    #grupbuyCountdown .countdown-value {
-        font-size: 32px;
-    }
-}
