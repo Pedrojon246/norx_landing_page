@@ -1,808 +1,1433 @@
-// ===============================================
-// NORXCOIN - Web3 Integration & Main Scripts
-// ===============================================
+/* ===============================================
+   NORXCOIN - Modern CSS Styles
+   =============================================== */
 
-// Contract Configuration
-const CONFIG = {
-    tokenAddress: '0x9F8ace87A43851aCc21B6a00A84b4F9088563179',
-    stakingAddress: '0x5b5B4d0bfF42E152E8aA9E614E948797DBF1FB65',
-    chainId: 56,
-    chainIdHex: '0x38',
-    chainName: 'Binance Smart Chain',
-    rpcUrl: 'https://bsc-dataseed.binance.org/',
-    explorerUrl: 'https://bscscan.com/',
-    geckoTerminalPoolUrl: 'https://api.geckoterminal.com/api/v2/networks/bsc/pools/0x8ca34c2cb4516f47b843beda65542df6523b61c8d25af4eb22eb98a64f8bb02f',
-    pancakeSwapUrl: 'https://pancakeswap.finance/swap?outputCurrency=0x9F8ace87A43851aCc21B6a00A84b4F9088563179'
-};
+/* Root Variables */
+:root {
+    --primary-color: #D4AF37;
+    --secondary-color: #FFD700;
+    --accent-color: #4CAF50;
+    --danger-color: #f44336;
+    --dark-bg: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --border-color: rgba(212, 175, 55, 0.2);
+    --gradient-primary: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+    --gradient-dark: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --shadow-large: 0 16px 32px rgba(0, 0, 0, 0.3);
+    --transition-fast: 0.3s ease;
+    --transition-medium: 0.5s ease;
+}
 
-// Contract ABIs
-const TOKEN_ABI = [
-    {"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"type":"function"},
-    {"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"type":"function"},
-    {"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"type":"function"},
-    {"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"type":"function"},
-    {"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"type":"function"},
-    {"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"type":"function"},
-    {"constant":true,"inputs":[{"name":"_owner","type":"address"},{"name":"_spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"type":"function"}
-];
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-const STAKING_ABI = [
-    {"inputs":[{"internalType":"uint256","name":"_poolId","type":"uint256"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[{"internalType":"uint256","name":"_poolId","type":"uint256"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"unstake","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[{"internalType":"uint256","name":"_poolId","type":"uint256"}],"name":"claimRewards","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[{"internalType":"uint256","name":"_poolId","type":"uint256"},{"internalType":"address","name":"_user","type":"address"}],"name":"getUserStakeInfo","outputs":[{"internalType":"uint256","name":"stakedAmount","type":"uint256"},{"internalType":"uint256","name":"pendingRewards","type":"uint256"},{"internalType":"uint256","name":"stakeTime","type":"uint256"},{"internalType":"uint256","name":"lockEndTime","type":"uint256"}],"stateMutability":"view","type":"function"},
-    {"inputs":[{"internalType":"uint256","name":"_poolId","type":"uint256"}],"name":"getPoolStats","outputs":[{"internalType":"uint256","name":"totalStaked","type":"uint256"},{"internalType":"uint256","name":"rewardPerBlock","type":"uint256"},{"internalType":"uint256","name":"lockPeriod","type":"uint256"},{"internalType":"bool","name":"isPaused","type":"bool"},{"internalType":"uint256","name":"apr","type":"uint256"}],"stateMutability":"view","type":"function"}
-];
+html {
+    scroll-behavior: smooth;
+}
 
-// Global Variables
-let web3 = null;
-let userAccount = null;
-let tokenContract = null;
-let stakingContract = null;
-let priceUpdateInterval = null;
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', async function() {
-    console.log('🪙 NORXCOIN Website Initialized');
-    
-    // Hide loading screen
-    setTimeout(() => {
-        const loadingScreen = document.getElementById('loadingScreen');
-        if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
-        }
-    }, 1500);
-    
-    // Initialize components
-    await initializeWeb3();
-    initializeEventListeners();
-    initializeTokenomicsChart();
-    initGrupbuyCountdown();
-    updatePriceData();
-    
-    // Start price updates
-    priceUpdateInterval = setInterval(updatePriceData, 30000);
-    
-    // Initialize scroll effects
-    handleScrollEffects();
-});
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
 
-// ===============================================
-// Norx Grupbuy Countdown Timer
-// ===============================================
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
 
-function initGrupbuyCountdown() {
-    const launchDate = new Date();
-    launchDate.setDate(launchDate.getDate() + 60);
-    launchDate.setHours(0, 0, 0, 0);
-    
-    function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = launchDate.getTime() - now;
-        
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        const daysEl = document.querySelector('#grupbuyCountdown #days');
-        const hoursEl = document.querySelector('#grupbuyCountdown #hours');
-        const minutesEl = document.querySelector('#grupbuyCountdown #minutes');
-        const secondsEl = document.querySelector('#grupbuyCountdown #seconds');
-        
-        if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
-        if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-        if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-        if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
-        
-        if (distance < 0) {
-            clearInterval(countdownInterval);
-            const countdownEl = document.getElementById('grupbuyCountdown');
-            if (countdownEl) {
-                countdownEl.innerHTML = '<div style="font-size: 36px; color: #D4AF37; text-align: center;">🎉 PLATAFORMA LANÇADA! 🎉</div>';
-            }
-        }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+/* Loading Screen */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-container {
+    text-align: center;
+}
+
+.coin-loader {
+    font-size: 60px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 18px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    transition: var(--transition-medium);
+    padding: 1rem 0;
+}
+
+.header.scrolled {
+    background: rgba(10, 10, 10, 0.98);
+    padding: 0.5rem 0;
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.logo-coin {
+    font-size: 30px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.logo-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-primary);
+    font-weight: 500;
+    transition: var(--transition-fast);
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.wallet-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gradient-primary);
+    color: var(--dark-bg);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.wallet-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.wallet-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 16px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.wallet-address {
+    font-size: 14px;
+    color: var(--primary-color);
+    font-family: monospace;
+}
+
+.wallet-balance {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    padding: 120px 0 80px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+    z-index: -1;
+}
+
+.hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(76, 175, 80, 0.2);
+    color: var(--accent-color);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.hero-title {
+    margin-bottom: 20px;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 900;
+    animation: fadeInUp 0.8s ease;
+}
+
+.gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+/* Price Ticker */
+.price-ticker {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+    animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.price-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px 40px;
+    min-width: 300px;
+}
+
+.price-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.price-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.price-usd {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--primary-color);
+}
+
+.price-change {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.price-change.positive {
+    background: rgba(76, 175, 80, 0.2);
+    color: var(--accent-color);
+}
+
+.price-change.negative {
+    background: rgba(244, 67, 54, 0.2);
+    color: var(--danger-color);
+}
+
+.price-info {
+    display: flex;
+    justify-content: space-around;
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Hero Actions */
+.hero-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 40px 0;
+    animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: var(--dark-bg);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background: var(--primary-color);
+    color: var(--dark-bg);
+}
+
+.btn-large {
+    padding: 16px 32px;
+    font-size: 18px;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-small {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* Contract Info */
+.contract-info {
+    margin-top: 40px;
+    animation: fadeInUp 0.8s ease 0.8s both;
+}
+
+.contract-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.contract-address {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.contract-address code {
+    font-family: monospace;
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 18px;
+    transition: var(--transition-fast);
+}
+
+.copy-btn:hover {
+    color: var(--primary-color);
+}
+
+/* Stats Section */
+.stats-section {
+    padding: 60px 0;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 30px 20px;
+    background: var(--dark-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-fast);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-medium);
+}
+
+.stat-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Sections */
+.about-section,
+.tokenomics-section,
+.staking-section,
+.roadmap-section,
+.team-section {
+    padding: 80px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 16px;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    transition: var(--transition-fast);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-large);
+}
+
+.feature-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.feature-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.feature-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Grupbuy Section */
+.grupbuy-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    position: relative;
+}
+
+.grupbuy-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.grupbuy-info {
+    color: #fff;
+}
+
+.grupbuy-title {
+    font-size: 2rem;
+    color: #D4AF37;
+    margin-bottom: 20px;
+}
+
+.grupbuy-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ccc;
+    margin-bottom: 30px;
+}
+
+.grupbuy-benefits {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.grupbuy-benefits h4 {
+    color: #D4AF37;
+    margin-bottom: 15px;
+}
+
+.benefit-list {
+    list-style: none;
+    padding: 0;
+}
+
+.benefit-list li {
+    padding: 8px 0;
+    color: #fff;
+}
+
+.grupbuy-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.grupbuy-stat {
+    text-align: center;
+    background: rgba(212, 175, 55, 0.05);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.grupbuy-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #D4AF37;
+}
+
+.grupbuy-stat-label {
+    color: #999;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+.grupbuy-showcase {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.showcase-card {
+    background: rgba(212, 175, 55, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 15px;
+    padding: 25px;
+    transition: all 0.3s ease;
+}
+
+.showcase-card:hover {
+    transform: translateY(-5px);
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.showcase-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.showcase-card h4 {
+    color: #D4AF37;
+    margin-bottom: 10px;
+}
+
+.showcase-card p {
+    color: #ccc;
+}
+
+/* Countdown Timer */
+.countdown-container {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+    border-radius: 25px;
+    padding: 40px;
+    margin-bottom: 30px;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+}
+
+.countdown-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #D4AF37;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+#grupbuyCountdown {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+#grupbuyCountdown .countdown-item {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 25px 30px;
+    text-align: center;
+    min-width: 100px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+#grupbuyCountdown .countdown-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: #D4AF37;
+    display: block;
+    line-height: 1;
+}
+
+#grupbuyCountdown .countdown-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 10px;
+    display: block;
+    letter-spacing: 1px;
+}
+
+.grupbuy-cta {
+    text-align: center;
+}
+
+/* Tokenomics */
+.tokenomics-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.tokenomics-chart {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.tokenomics-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.token-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-fast);
+}
+
+.token-item:hover {
+    border-color: var(--primary-color);
+}
+
+.token-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.token-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.token-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.token-percent {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.token-amount {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/* Staking Section */
+.staking-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.staking-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.staking-stat {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.staking-stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.staking-stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.staking-interface {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.staking-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--primary-color);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.stake-input,
+.pool-select {
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: var(--transition-fast);
+}
+
+.stake-input:focus,
+.pool-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.max-btn {
+    padding: 12px 20px;
+    background: var(--primary-color);
+    color: var(--dark-bg);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.max-btn:hover {
+    background: var(--secondary-color);
+}
+
+.balance-info {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.pool-selector {
+    margin-bottom: 24px;
+}
+
+.user-positions {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.no-positions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.position-item {
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.position-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.position-pool {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.position-locked {
+    font-size: 12px;
+    color: var(--danger-color);
+}
+
+.position-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.position-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.text-success {
+    color: var(--accent-color);
+}
+
+.rewards-section {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.rewards-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.rewards-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+/* Roadmap */
+.roadmap-timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-color);
+    transform: translateX(-50%);
+}
+
+.roadmap-item {
+    position: relative;
+    margin-bottom: 60px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.roadmap-marker {
+    width: 48px;
+    height: 48px;
+    background: var(--card-bg);
+    border: 3px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    z-index: 1;
+}
+
+.roadmap-item.completed .roadmap-marker {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.roadmap-item.active .roadmap-marker {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    animation: pulse 2s infinite;
+}
+
+.roadmap-content {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.roadmap-item:nth-child(odd) .roadmap-content {
+    grid-column: 1;
+    text-align: right;
+}
+
+.roadmap-item:nth-child(even) .roadmap-content {
+    grid-column: 3;
+}
+
+.roadmap-date {
+    font-size: 14px;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.roadmap-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.roadmap-list {
+    list-style: none;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.roadmap-list li {
+    margin-bottom: 4px;
+}
+
+/* Team Section */
+.team-section {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.team-card {
+    background: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    transition: var(--transition-fast);
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-large);
+}
+
+.team-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.team-role {
+    font-size: 14px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.team-member {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.team-member a {
+    color: var(--text-primary);
+    transition: var(--transition-fast);
+}
+
+.team-member a:hover {
+    color: var(--primary-color);
+}
+
+.team-members {
+    font-size: 16px;
+    color: var(--text-secondary);
+}
+
+/* Footer */
+.footer {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 60px 0 30px;
+    margin-top: 80px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 60px;
+    margin-bottom: 40px;
+}
+
+.footer-brand {
+    max-width: 300px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 16px;
+}
+
+.footer-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.footer-column h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+}
+
+.footer-column a {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 8px;
+    transition: var(--transition-fast);
+}
+
+.footer-column a:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-bottom p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.disclaimer {
+    font-size: 12px;
+    opacity: 0.7;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px 20px;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.toast.success {
+    border-color: var(--accent-color);
+}
+
+.toast.error {
+    border-color: var(--danger-color);
+}
+
+.toast-icon {
+    font-size: 20px;
+}
+
+.toast-message {
+    flex: 1;
+    font-size: 14px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .tokenomics-content {
+        grid-template-columns: 1fr;
     }
     
-    const countdownInterval = setInterval(updateCountdown, 1000);
-    updateCountdown();
-}
-
-// ===============================================
-// Web3 Integration
-// ===============================================
-
-async function initializeWeb3() {
-    try {
-        if (typeof window.ethereum !== 'undefined') {
-            console.log('MetaMask detected');
-            web3 = new Web3(window.ethereum);
-            
-            // Check if already connected (don't auto-connect)
-            const accounts = await web3.eth.getAccounts();
-            if (accounts.length > 0) {
-                await handleAccountsChanged(accounts);
-            }
-            
-            // Listen for account changes
-            window.ethereum.on('accountsChanged', handleAccountsChanged);
-            
-            // Listen for network changes
-            window.ethereum.on('chainChanged', handleChainChanged);
-        } else {
-            console.log('MetaMask not detected');
-            // Use read-only provider for price data
-            web3 = new Web3(new Web3.providers.HttpProvider(CONFIG.rpcUrl));
-        }
-    } catch (error) {
-        console.error('Error initializing Web3:', error);
+    .staking-interface {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .grupbuy-content {
+        grid-template-columns: 1fr;
     }
 }
 
-async function connectWallet() {
-    if (typeof window.ethereum === 'undefined') {
-        showToast('Por favor, instale a MetaMask para continuar', 'error');
-        window.open('https://metamask.io/download/', '_blank');
-        return;
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
     }
     
-    try {
-        // Request account access
-        const accounts = await window.ethereum.request({ 
-            method: 'eth_requestAccounts' 
-        });
-        
-        // Check network
-        const chainId = await web3.eth.getChainId();
-        if (chainId !== CONFIG.chainId) {
-            await switchNetwork();
-            return; // Exit and let the network switch handle reconnection
-        }
-        
-        await handleAccountsChanged(accounts);
-        showToast('Carteira conectada com sucesso!', 'success');
-        
-    } catch (error) {
-        console.error('Error connecting wallet:', error);
-        if (error.code === 4001) {
-            showToast('Conexão cancelada pelo usuário', 'warning');
-        } else {
-            showToast('Erro ao conectar carteira', 'error');
-        }
+    .mobile-menu-toggle {
+        display: block;
     }
-}
-
-async function handleAccountsChanged(accounts) {
-    try {
-        if (accounts.length === 0) {
-            userAccount = null;
-            updateWalletUI(false);
-        } else {
-            userAccount = accounts[0];
-            updateWalletUI(true);
-            
-            if (web3) {
-                tokenContract = new web3.eth.Contract(TOKEN_ABI, CONFIG.tokenAddress);
-                stakingContract = new web3.eth.Contract(STAKING_ABI, CONFIG.stakingAddress);
-                
-                // Update balance and staking info
-                await updateBalance();
-                await updateStakingInfo();
-            }
-        }
-    } catch (error) {
-        console.error('Error in handleAccountsChanged:', error);
+    
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 20px;
     }
-}
-
-function handleChainChanged(chainId) {
-    window.location.reload();
-}
-
-async function switchNetwork() {
-    try {
-        await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: CONFIG.chainIdHex }]
-        });
-        showToast('Rede alterada para BSC', 'success');
-    } catch (switchError) {
-        if (switchError.code === 4902) {
-            try {
-                await window.ethereum.request({
-                    method: 'wallet_addEthereumChain',
-                    params: [{
-                        chainId: CONFIG.chainIdHex,
-                        chainName: CONFIG.chainName,
-                        nativeCurrency: {
-                            name: 'BNB',
-                            symbol: 'BNB',
-                            decimals: 18
-                        },
-                        rpcUrls: [CONFIG.rpcUrl],
-                        blockExplorerUrls: [CONFIG.explorerUrl]
-                    }]
-                });
-                showToast('Rede BSC adicionada com sucesso', 'success');
-            } catch (addError) {
-                console.error('Error adding network:', addError);
-                showToast('Erro ao adicionar rede BSC', 'error');
-            }
-        } else {
-            console.error('Error switching network:', switchError);
-            showToast('Erro ao trocar de rede', 'error');
-        }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .staking-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .roadmap-timeline::before {
+        left: 20px;
+    }
+    
+    .roadmap-item {
+        grid-template-columns: auto 1fr;
+        gap: 20px;
+    }
+    
+    .roadmap-marker {
+        grid-column: 1;
+    }
+    
+    .roadmap-content {
+        grid-column: 2 !important;
+        text-align: left !important;
+    }
+    
+    #grupbuyCountdown {
+        gap: 15px;
+    }
+    
+    #grupbuyCountdown .countdown-item {
+        padding: 15px;
+        min-width: 70px;
+    }
+    
+    #grupbuyCountdown .countdown-value {
+        font-size: 32px;
     }
 }
 
-async function updateBalance() {
-    if (!tokenContract || !userAccount) return;
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
     
-    try {
-        const balance = await tokenContract.methods.balanceOf(userAccount).call();
-        const decimals = await tokenContract.methods.decimals().call();
-        const formattedBalance = (balance / Math.pow(10, decimals)).toFixed(2);
-        
-        const walletBalanceEl = document.getElementById('walletBalance');
-        const walletBalanceInfoEl = document.querySelector('.wallet-balance');
-        
-        if (walletBalanceEl) {
-            walletBalanceEl.textContent = formattedBalance;
-        }
-        if (walletBalanceInfoEl) {
-            walletBalanceInfoEl.textContent = `${formattedBalance} NORX`;
-        }
-    } catch (error) {
-        console.error('Error updating balance:', error);
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-links {
+        grid-template-columns: 1fr;
     }
 }
 
-function updateWalletUI(connected) {
-    const connectBtn = document.getElementById('connectWallet');
-    const walletInfo = document.getElementById('walletInfo');
-    const stakeBtn = document.getElementById('stakeBtn');
-    const walletAddressEl = document.querySelector('.wallet-address');
-    
-    if (connected && userAccount) {
-        if (connectBtn) connectBtn.style.display = 'none';
-        if (walletInfo) walletInfo.style.display = 'flex';
-        
-        // Show shortened address
-        const shortAddress = `${userAccount.slice(0, 6)}...${userAccount.slice(-4)}`;
-        if (walletAddressEl) {
-            walletAddressEl.textContent = shortAddress;
-        }
-        
-        // Enable staking button
-        if (stakeBtn) {
-            stakeBtn.disabled = false;
-            stakeBtn.textContent = 'Fazer Staking';
-        }
-    } else {
-        if (connectBtn) connectBtn.style.display = 'flex';
-        if (walletInfo) walletInfo.style.display = 'none';
-        
-        if (stakeBtn) {
-            stakeBtn.disabled = true;
-            stakeBtn.textContent = 'Conecte sua carteira';
-        }
-    }
-}
-
-// ===============================================
-// Staking Functions
-// ===============================================
-
-async function stake() {
-    if (!stakingContract || !userAccount) {
-        showToast('Conecte sua carteira primeiro', 'error');
-        return;
-    }
-    
-    const amountInput = document.getElementById('stakeAmount');
-    const amount = amountInput ? amountInput.value : null;
-    const poolSelect = document.getElementById('poolSelect');
-    const poolId = poolSelect ? poolSelect.value : 0;
-    
-    if (!amount || amount <= 0) {
-        showToast('Digite uma quantidade válida', 'error');
-        return;
-    }
-    
-    try {
-        const amountWei = web3.utils.toWei(amount, 'ether');
-        
-        const poolNames = ['90 dias'];
-        showToast(`Preparando stake no pool ${poolNames[poolId]} (20% APR anual)...`, 'info');
-        
-        const approved = await approveTokens(amountWei);
-        if (!approved) return;
-        
-        showToast('Fazendo stake... Por favor, confirme a transação', 'info');
-        const tx = await stakingContract.methods
-            .stake(poolId, amountWei)
-            .send({ from: userAccount });
-        
-        showToast(`✅ Staking de ${amount} NORX realizado com sucesso no pool ${poolNames[poolId]}!`, 'success');
-        await updateStakingInfo();
-        await updateBalance();
-        
-        if (amountInput) amountInput.value = '';
-        
-    } catch (error) {
-        console.error('Staking error:', error);
-        if (error.code === 4001 || error.message.includes('User denied')) {
-            showToast('Transação cancelada pelo usuário', 'warning');
-        } else {
-            showToast('Erro ao fazer staking: ' + (error.message || 'Erro desconhecido'), 'error');
-        }
-    }
-}
-
-async function unstake(poolId, amount) {
-    if (!stakingContract || !userAccount) return;
-    
-    try {
-        const amountWei = web3.utils.toWei(amount.toString(), 'ether');
-        
-        const tx = await stakingContract.methods
-            .unstake(poolId, amountWei)
-            .send({ from: userAccount });
-        
-        showToast('Unstake realizado com sucesso!', 'success');
-        await updateStakingInfo();
-        await updateBalance();
-        
-    } catch (error) {
-        console.error('Unstake error:', error);
-        showToast('Erro ao fazer unstake', 'error');
-    }
-}
-
-async function claimRewards() {
-    if (!stakingContract || !userAccount) return;
-    
-    try {
-        const poolId = 0;
-        
-        const tx = await stakingContract.methods
-            .claimRewards(poolId)
-            .send({ from: userAccount });
-        
-        showToast('Recompensas resgatadas com sucesso!', 'success');
-        await updateStakingInfo();
-        await updateBalance();
-        
-    } catch (error) {
-        console.error('Claim error:', error);
-        showToast('Erro ao resgatar recompensas', 'error');
-    }
-}
-
-async function approveTokens(amount) {
-    if (!tokenContract || !userAccount) return false;
-    
-    try {
-        const allowance = await tokenContract.methods
-            .allowance(userAccount, CONFIG.stakingAddress)
-            .call();
-        
-        if (BigInt(allowance) >= BigInt(amount)) {
-            console.log('Tokens já aprovados, pulando aprovação...');
-            return true;
-        }
-        
-        showToast('🔐 Passo 1/2: Aprovando tokens... Confirme a transação no MetaMask', 'info');
-        
-        const tx = await tokenContract.methods
-            .approve(CONFIG.stakingAddress, amount)
-            .send({ from: userAccount });
-        
-        showToast('✅ Passo 1/2 completo: Tokens aprovados! Agora fazendo stake...', 'success');
-        
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        return true;
-        
-    } catch (error) {
-        console.error('Approval error:', error);
-        if (error.code === 4001 || error.message.includes('User denied')) {
-            showToast('Aprovação cancelada pelo usuário', 'warning');
-        } else {
-            showToast('Erro ao aprovar tokens: ' + (error.message || 'Erro desconhecido'), 'error');
-        }
-        return false;
-    }
-}
-
-async function updateStakingInfo() {
-    if (!stakingContract || !userAccount) return;
-    
-    try {
-        const positions = [];
-        let totalStaked = 0;
-        let totalRewards = 0;
-        
-        for (let poolId = 0; poolId < 3; poolId++) {
-            try {
-                const stakeInfo = await stakingContract.methods
-                    .getUserStakeInfo(poolId, userAccount)
-                    .call();
-                
-                if (stakeInfo.stakedAmount > 0) {
-                    const staked = web3.utils.fromWei(stakeInfo.stakedAmount, 'ether');
-                    const rewards = web3.utils.fromWei(stakeInfo.pendingRewards, 'ether');
-                    
-                    positions.push({
-                        poolId,
-                        staked: parseFloat(staked),
-                        rewards: parseFloat(rewards),
-                        lockEndTime: stakeInfo.lockEndTime
-                    });
-                    
-                    totalStaked += parseFloat(staked);
-                    totalRewards += parseFloat(rewards);
-                }
-            } catch (error) {
-                break;
-            }
-        }
-        
-        updatePositionsUI(positions);
-        
-        const totalStakedEl = document.getElementById('totalStaked');
-        if (totalStakedEl) {
-            totalStakedEl.textContent = `${totalStaked.toFixed(2)} NORX`;
-        }
-        
-        const pendingRewardsEl = document.getElementById('pendingRewards');
-        if (pendingRewardsEl) {
-            pendingRewardsEl.textContent = `${totalRewards.toFixed(4)} NORX`;
-        }
-        
-        const rewardsSection = document.querySelector('.rewards-section');
-        if (rewardsSection) {
-            rewardsSection.style.display = totalRewards > 0 ? 'block' : 'none';
-        }
-        
-    } catch (error) {
-        console.error('Error updating staking info:', error);
-    }
-}
-
-function updatePositionsUI(positions) {
-    const container = document.getElementById('userPositions');
-    if (!container) return;
-    
-    if (positions.length === 0) {
-        container.innerHTML = `
-            <div class="no-positions">
-                <p>Você não tem posições ativas</p>
-            </div>
-        `;
-        return;
-    }
-    
-    let html = '';
-    positions.forEach(pos => {
-        const poolName = getPoolName(pos.poolId);
-        const isLocked = pos.lockEndTime > Date.now() / 1000;
-        
-        html += `
-            <div class="position-item">
-                <div class="position-header">
-                    <span class="position-pool">${poolName}</span>
-                    ${isLocked ? '<span class="position-locked">🔒 Bloqueado</span>' : ''}
-                </div>
-                <div class="position-details">
-                    <div class="position-stat">
-                        <span>Em Staking:</span>
-                        <span>${pos.staked.toFixed(2)} NORX</span>
-                    </div>
-                    <div class="position-stat">
-                        <span>Recompensas:</span>
-                        <span class="text-success">${pos.rewards.toFixed(4)} NORX</span>
-                    </div>
-                </div>
-                ${!isLocked ? `
-                    <button class="btn btn-secondary btn-small" onclick="unstake(${pos.poolId}, ${pos.staked})">
-                        Retirar
-                    </button>
-                ` : ''}
-            </div>
-        `;
-    });
-    
-    container.innerHTML = html;
-}
-
-function getPoolName(poolId) {
-    const pools = {
-        0: 'Pool 90 dias',
-        1: 'Pool 30 dias',
-        2: 'Pool Flexível'
-    };
-    return pools[poolId] || `Pool ${poolId}`;
-}
-
-function setMaxStake() {
-    const balanceEl = document.getElementById('walletBalance');
-    const amountInput = document.getElementById('stakeAmount');
-    
-    if (balanceEl && amountInput) {
-        const balance = balanceEl.textContent;
-        amountInput.value = balance;
-    }
-}
-
-// ===============================================
-// Price Data
-// ===============================================
-
-async function updatePriceData() {
-    try {
-        const response = await fetch(CONFIG.geckoTerminalPoolUrl);
-        const data = await response.json();
-        
-        if (data && data.data && data.data.attributes) {
-            const poolData = data.data.attributes;
-            
-            const priceUSD = parseFloat(poolData.base_token_price_usd) || 0;
-            const priceChange24h = parseFloat(poolData.price_change_percentage_24h) || 0;
-            const volume24h = parseFloat(poolData.volume_usd_24h) || 0;
-            
-            const totalSupply = 1500000000;
-            const burnedTokens = 375000000;
-            const circulatingSupply = totalSupply - burnedTokens;
-            const marketCap = priceUSD * circulatingSupply;
-            
-            const priceUsdEl = document.getElementById('currentPrice');
-            if (priceUsdEl) {
-                const priceSpan = priceUsdEl.querySelector('.price-usd');
-                if (priceSpan) {
-                    priceSpan.textContent = priceUSD < 0.01 ? `$${priceUSD.toFixed(8)}` : `$${priceUSD.toFixed(4)}`;
-                }
-            }
-            
-            const changeElement = document.getElementById('priceChange');
-            if (changeElement) {
-                changeElement.textContent = `${priceChange24h > 0 ? '+' : ''}${priceChange24h.toFixed(2)}%`;
-                changeElement.className = priceChange24h > 0 ? 'price-change positive' : 'price-change negative';
-            }
-            
-            const marketCapEl = document.getElementById('marketCap');
-            if (marketCapEl) marketCapEl.textContent = formatNumber(marketCap);
-            
-            const volume24hEl = document.getElementById('volume24h');
-            if (volume24hEl) volume24hEl.textContent = formatNumber(volume24h);
-            
-            console.log('✅ Price updated from GeckoTerminal:', priceUSD);
-            
-        } else {
-            console.error('Invalid data from GeckoTerminal');
-            updatePriceWithFallback();
-        }
-        
-    } catch (error) {
-        console.error('Error fetching price data:', error);
-        updatePriceWithFallback();
-    }
-}
-
-function updatePriceWithFallback() {
-    const priceData = {
-        price: 0.0288,
-        change24h: 0,
-        marketCap: 32400000,
-        volume24h: 0
-    };
-    
-    const priceUsdEl = document.getElementById('currentPrice');
-    if (priceUsdEl) {
-        const priceSpan = priceUsdEl.querySelector('.price-usd');
-        if (priceSpan) {
-            priceSpan.textContent = `$${priceData.price.toFixed(4)}`;
-        }
-    }
-    
-    const changeElement = document.getElementById('priceChange');
-    if (changeElement) {
-        changeElement.textContent = `${priceData.change24h.toFixed(2)}%`;
-        changeElement.className = 'price-change';
-    }
-    
-    const marketCapEl = document.getElementById('marketCap');
-    if (marketCapEl) marketCapEl.textContent = formatNumber(priceData.marketCap);
-    
-    const volume24hEl = document.getElementById('volume24h');
-    if (volume24hEl) volume24hEl.textContent = formatNumber(priceData.volume24h);
-}
-
-// ===============================================
-// UI Functions
-// ===============================================
-
-function initializeTokenomicsChart() {
-    const ctx = document.getElementById('tokenomicsChart');
-    if (!ctx) return;
-    
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Queima Inicial', 'Liquidez', 'Staking Rewards', 'Desenvolvimento', 'Equipe', 'Reserva Fundador'],
-            datasets: [{
-                data: [25, 25, 20, 20, 5, 5],
-                backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                    '#4BC0C0',
-                    '#9966FF',
-                    '#FF9F40'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.label + ': ' + context.parsed + '%';
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
-function initializeEventListeners() {
-    const connectBtn = document.getElementById('connectWallet');
-    if (connectBtn) {
-        connectBtn.addEventListener('click', connectWallet);
-    }
-    
-    const stakeBtn = document.getElementById('stakeBtn');
-    if (stakeBtn) {
-        stakeBtn.addEventListener('click', stake);
-    }
-    
-    const claimBtn = document.getElementById('claimBtn');
-    if (claimBtn) {
-        claimBtn.addEventListener('click', claimRewards);
-    }
-    
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    if (mobileToggle) {
-        mobileToggle.addEventListener('click', toggleMobileMenu);
-    }
-    
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
-
-function handleScrollEffects() {
-    const header = document.querySelector('.header');
-    if (!header) return;
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-        
-        const elements = document.querySelectorAll('.feature-card, .stat-card, .roadmap-item');
-        elements.forEach(element => {
-            const rect = element.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.8) {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }
-        });
-    });
-    
-    document.querySelectorAll('.feature-card, .stat-card, .roadmap-item').forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(20px)';
-        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    });
-}
-
-function toggleMobileMenu() {
-    const navMenu = document.querySelector('.nav-menu');
-    if (navMenu) {
-        navMenu.classList.toggle('mobile-active');
-    }
-}
-
-function scrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-}
-
-function copyContract() {
-    const contractAddressEl = document.getElementById('contractAddress');
-    if (!contractAddressEl) return;
-    
-    const contractAddress = contractAddressEl.textContent;
-    navigator.clipboard.writeText(contractAddress).then(() => {
-        showToast('Endereço do contrato copiado!', 'success');
-    }).catch(err => {
-        console.error('Error copying address:', err);
-        showToast('Erro ao copiar endereço', 'error');
-    });
-}
-
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
-    
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    
-    const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
-    
-    toast.innerHTML = `
-        <span class="toast-icon">${icon}</span>
-        <span class="toast-message">${message}</span>
-    `;
-    
-    container.appendChild(toast);
-    
-    setTimeout(() => {
-        toast.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            if (container.contains(toast)) {
-                container.removeChild(toast);
-            }
-        }, 300);
-    }, 5000);
-}
-
-// ===============================================
-// Utility Functions
-// ===============================================
-
-function formatNumber(num) {
-    if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
-    if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
-    if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
-    return num.toFixed(2);
-}
-
-function formatAddress(address) {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-}
-
-// ===============================================
-// Export functions for global use
-// ===============================================
-
-window.connectWallet = connectWallet;
-window.stake = stake;
-window.unstake = unstake;
-window.claimRewards = claimRewards;
-window.setMaxStake = setMaxStake;
-window.copyContract = copyContract;
-window.scrollToSection = scrollToSection;
-
-console.log('🚀 NORXCOIN Scripts loaded successfully!');
+/* Utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.hidden { display: none !important; }
+.visible { display: block !important; }
